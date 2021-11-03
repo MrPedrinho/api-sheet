@@ -4,18 +4,26 @@ import {Class} from "../../utils/types";
 const {dbConnect, Aula} = require("../../utils/mongoose")
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-    await dbConnect()
+    try {
+        await dbConnect()
 
-    const aulas = await Aula.find({})
+        if (req.method === "GET") {
+            const query = req.query.id ?? ""
+            const aulas = await Aula.find(query.length > 0 ? {id: query}: {})
 
-    const classDetails = aulas.map((aula: Class) => {
-        const {name, id, date} = aula
-        const algoCount = aula.algorithms.length;
+            const classDetails = aulas.map((aula: Class) => {
+                const {name, id, date, algorithms} = aula
+                return {
+                    name, id, date, algorithms
+                }
+            })
 
-        return {
-            name, id, date, algoCount
+            return res.status(200).json({classes: classDetails})
         }
-    })
 
-    return res.status(200).json({classes: classDetails})
+    } catch (err) {
+        console.error(err)
+        return res.status(500).json({error: true})
+    }
+
 }
