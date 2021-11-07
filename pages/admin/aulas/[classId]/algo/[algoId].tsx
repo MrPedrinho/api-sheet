@@ -1,7 +1,8 @@
 import Link from "next/link"
 // @ts-ignore
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { dark } from 'node_modules/react-syntax-highlighter/dist/cjs/styles/prism'
+// @ts-ignore
+import { dark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import {GetStaticPaths, GetStaticProps} from "next";
 import axios from "axios";
 import {Class, Algorithm} from "../../../../../utils/types";
