@@ -9,13 +9,14 @@ export type Class = {
 
 export type Algorithm = {
     name: string,
-    id: number,
+    id?: number,
     lang: "C++" | "C" | "Python",
     syntax: "cpp" | "c" | "python",
     description: string,
-    tags: {type: string, value: string}[]
+    tags?: {type: string, value: string}[]
     content: string
     diff?: "easy" | "medium" | "hard"
+    _id?: string
 }
 
 export type FormValues = {

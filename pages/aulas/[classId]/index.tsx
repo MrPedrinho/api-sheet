@@ -2,11 +2,13 @@ import Link from "next/link";
 import {Class} from "../../../utils/types";
 import {GetStaticPaths, GetStaticProps} from "next";
 import axios from "axios";
+import Header from "../../../components/Header";
 
 export default function Aula ({aula}: {aula: Class}) {
 
     return (
         <div>
+            <Header title={aula.name}/>
             <div className="w-full h-full p-5 flex flex-col items-center">
                 <div className="flex flex-row items-center justify-center">
                     <h1 className="text-3xl font-semibold opacity-80">

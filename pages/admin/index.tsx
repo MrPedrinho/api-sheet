@@ -3,9 +3,9 @@ import Link from "next/link"
 import {Class} from "../../utils/types";
 import axios from "axios";
 import {withPageAuthRequired} from "@auth0/nextjs-auth0";
-import {User} from "auth0";
+import Header from "../../components/Header";
 
-const Home: NextPage<{classes: Class[], user: User}> = ({ user, classes }) => {
+const Home: NextPage<{classes: Class[]}> = ({ classes }) => {
 
     const newClasses = classes.map((c: Class) => {
         c.date = new Date(c.date)
@@ -14,13 +14,14 @@ const Home: NextPage<{classes: Class[], user: User}> = ({ user, classes }) => {
 
     return (
         <div className="w-full h-full p-5 flex flex-col items-center">
-            <div className="fixed top-0 left-0 flex flex-row items-center justify-center py-2 px-4">
+            <Header title="Administrador"/>
+            <div className="fixed top-0 left-0 flex flex-row items-center justify-center py-2 px-2">
                 <Link href={"/admin/criar"}>
-                    <a>Nova Aula</a>
+                    <a className="bg-green-500 py-2 px-6 text-white rounded-full text-lg shadow-lg border border-solid border-green-500 transition hover:text-green-500 hover:bg-white duration-300">Nova Aula</a>
                 </Link>
             </div>
             <div className="flex flex-row items-center justify-center">
-                <h1 className="text-3xl font-semibold opacity-80">Algoritmos de Aplicações Informáticas B</h1>
+                <h1 className="text-3xl font-semibold opacity-80">Algoritmos de Aplicações Informáticas | Administrador</h1>
             </div>
             <div className="flex flex-col mt-20 w-[700px]">
                 <div className="text-xl w-full grid grid-cols-5 border-b border-solid border-green-500 border-b-2 opacity-80">
@@ -33,7 +34,7 @@ const Home: NextPage<{classes: Class[], user: User}> = ({ user, classes }) => {
                         <span className="col-start-1 flex items-center">{aula.name}</span>
                         <span className="col-start-2 flex items-center">{aula.algorithms.length}</span>
                         <span className="col-start-4 flex items-center">{aula.date.getDate()} / {aula.date.getMonth()} / {aula.date.getFullYear()}</span>
-                        <Link href={`/aulas/${aula.id}`}>
+                        <Link href={`/admin/aulas/${aula.id}`}>
                             <a className="text-green-500 text-center my-1 hover:animate-pulse">Continuar</a>
                         </Link>
                     </div>

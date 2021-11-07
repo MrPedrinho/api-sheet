@@ -5,8 +5,8 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark } from 'react-syntax-highlighter/dist/cjs';
 import {GetStaticPaths, GetStaticProps} from "next";
 import axios from "axios";
-import {Class, Algorithm} from "../../../../utils/types";
-import Header from "../../../../components/Header";
+import {Class, Algorithm} from "../../../../../utils/types";
+import Header from "../../../../../components/Header";
 
 export default function algoId ({aula, algo}: {aula: Class, algo: Algorithm}) {
 
@@ -18,11 +18,15 @@ export default function algoId ({aula, algo}: {aula: Class, algo: Algorithm}) {
             <div className="w-full h-full p-5 flex flex-col items-center">
                 <div className="flex flex-row items-center justify-center">
                     <h1 className="text-3xl font-semibold opacity-80">
-                        <Link href={`/`}>
+                        <Link href={`/admin`}>
+                            <a className="text-green-500 hover:animate-pulse hover:underline">Admin</a>
+                        </Link>
+                        {" / "}
+                        <Link href={`/admin`}>
                             <a className="text-green-500 hover:animate-pulse hover:underline">{aula.name}</a>
                         </Link>
                         {" / "}
-                        <Link href={`/aulas/${aula.id}`}>
+                        <Link href={`/admin/aulas/${aula.id}`}>
                             <a className="text-green-500 hover:animate-pulse hover:underline">Algoritmos</a>
                         </Link>
                         {" / "}

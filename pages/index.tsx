@@ -2,6 +2,7 @@ import type {GetStaticProps, NextPage} from 'next'
 import Link from "next/link"
 import {Class} from "../utils/types";
 import axios from "axios";
+import Header from "../components/Header";
 
 const Home: NextPage<{classes: Class[]}> = ({classes}) => {
 
@@ -12,6 +13,7 @@ const Home: NextPage<{classes: Class[]}> = ({classes}) => {
 
     return (
     <div className="w-full h-full p-5 flex flex-col items-center">
+        <Header title="Aplicações Informáticas" desc="Base de dados com algoritmos de aplicações informáticas"/>
         <div className="flex flex-row items-center justify-center">
             <h1 className="text-3xl font-semibold opacity-80">Algoritmos de Aplicações Informáticas B</h1>
         </div>
@@ -38,7 +40,7 @@ const Home: NextPage<{classes: Class[]}> = ({classes}) => {
 
 export default Home
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getStaticProps: GetStaticProps = async () => {
     const {data} = await axios.get("http://localhost:3000/api/classes")
 
     return {

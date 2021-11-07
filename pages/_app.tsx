@@ -19,4 +19,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp
-//@todo add svgs
