@@ -16,7 +16,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
                 let algoIdx: number
                 aula.algorithms.forEach((algo: Algorithm, idx: number) => {
-                    if (algo.id.toString() === algoId) algoIdx = idx
+                    if (algo.id!.toString() === algoId) algoIdx = idx
                 })
 
                 const algo = aula.algorithms[algoIdx!]
