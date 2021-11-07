@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
+
+const withTM = require('next-transpile-modules')(["react-syntax-highlighter"])
+
+module.exports = withTM({
   reactStrictMode: true,
-}
+});
