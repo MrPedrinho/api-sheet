@@ -49,7 +49,7 @@ export default Home
 export const getServerSideProps = withPageAuthRequired({
     returnTo: "/",
     async getServerSideProps() {
-        const {data} = await axios.get("http://localhost:3000/api/classes")
+        const {data} = await axios.get("https://algos-api.vercel.app/api/classes")
 
         return {
             props: {

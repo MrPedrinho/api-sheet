@@ -66,7 +66,7 @@ export default function algoId ({aula, algo}: {aula: Class, algo: Algorithm}) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {data: {classes}} = await axios.get("http://localhost:3000/api/classes")
+    const {data: {classes}} = await axios.get("https://algos-api.vercel.app/api/classes")
 
     let paths: any[] = []
 

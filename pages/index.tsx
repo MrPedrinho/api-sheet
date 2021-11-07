@@ -41,7 +41,7 @@ const Home: NextPage<{classes: Class[]}> = ({classes}) => {
 export default Home
 
 export const getStaticProps: GetStaticProps = async () => {
-    const {data} = await axios.get("http://localhost:3000/api/classes")
+    const {data} = await axios.get("https://algos-api.vercel.app/api/classes")
 
     return {
         props: {

@@ -61,7 +61,7 @@ export default function Aula ({aula}: {aula: Class}) {
 export const getServerSideProps = withPageAuthRequired({
     returnTo: "/",
     async getServerSideProps(context) {
-        const {data} = await axios.get("http://localhost:3000/api/algos", {params: {classId: context.params!.classId}})
+        const {data} = await axios.get("https://algos-api.vercel.app/api/algos", {params: {classId: context.params!.classId}})
 
         return {
             props: {

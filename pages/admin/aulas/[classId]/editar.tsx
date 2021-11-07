@@ -45,7 +45,7 @@ export default function Editar({aula}: {aula: FormValues}) {
 export const getServerSideProps = withPageAuthRequired({
     returnTo: "/",
     async getServerSideProps(context) {
-        const {data} = await axios.get("http://localhost:3000/api/classes", {params: {classId: context.params!.classId}})
+        const {data} = await axios.get("https://algos-api.vercel.app/api/classes", {params: {classId: context.params!.classId}})
 
         const {name, date, algorithms} = data.classes[0]
 

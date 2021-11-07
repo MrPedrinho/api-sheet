@@ -42,7 +42,7 @@ export default function Aula ({aula}: {aula: Class}) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {data: {classes}} = await axios.get("http://localhost:3000/api/classes")
+    const {data: {classes}} = await axios.get("https://algos-api.vercel.app/api/classes")
 
     let paths: any[] = []
 
@@ -57,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const {data} = await axios.get("http://localhost:3000/api/algos", {params: {classId: params!.classId}})
+    const {data} = await axios.get("https://algos-api.vercel.app/api/algos", {params: {classId: params!.classId}})
 
     return {
         props: {
