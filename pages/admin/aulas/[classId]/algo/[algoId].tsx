@@ -83,7 +83,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const {data} = await axios.get("http://localhost:3000/api/algos", {params: {classId: params!.classId, algoId: params!.algoId}})
+    const {data} = await axios.get("https://algos-api.vercel.app/api/algos", {params: {classId: params!.classId, algoId: params!.algoId}})
 
     return {
         props: {
