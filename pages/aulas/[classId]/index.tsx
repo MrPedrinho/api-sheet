@@ -71,6 +71,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
         props: {
             aula: JSON.stringify(data.aula)
         },
-        revalidate: 60
+        revalidate: 20
     }
 }
