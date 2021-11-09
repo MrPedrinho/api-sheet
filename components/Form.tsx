@@ -18,8 +18,14 @@ export default function Form({onSubmit, defaultValues, type}: Props) {
     const {fields, append, remove} = useFieldArray({control, name: "algos"})
     const [sent, setSent] = useState(false)
 
+    function submit(data: FormValues) {
+        console.log(data)
+        setSent(true)
+        onSubmit(data)
+    }
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" className="flex flex-col py-2">
+        <form onSubmit={handleSubmit(submit)} autoComplete="off" className="flex flex-col py-2">
             <div className="flex flex-col py-2">
                 <label className="text-green-500 text-xl" htmlFor="name">Nome da aula:</label>
                 <input className="border-solid p-2 border-b border-green-300 focus-visible:border-green-500 focus:outline-none" type="text" id="name" {...register("nome", {required: "Necessário"})} placeholder="Aula 1" />
@@ -83,7 +89,7 @@ export default function Form({onSubmit, defaultValues, type}: Props) {
             <div className="ml-auto">
                 <button className="flex items-center text-white bg-green-500 py-1 px-4 rounded-full transition hover:bg-white hover:text-green-500 border border-green-500" onClick={() => append({})} type="button"><PlusIcon/> Adicionar algoritmo</button>
             </div>
-            <button onClick={() => setSent(true)} className="mr-auto flex items-center mt-4 rounded-full gap-2 bg-green-500 text-white transition hover:bg-white hover:text-green-500 border border-green-500 px-4 py-2" disabled={sent} type="submit">
+            <button className="mr-auto flex items-center mt-4 rounded-full gap-2 bg-green-500 text-white transition hover:bg-white hover:text-green-500 border border-green-500 px-4 py-2" disabled={sent} type="submit">
                 {!sent && <><UploadIcon/>{type === "create" ? "Submeter" : "Confirmar"}</>}
                 {sent && <>A criar aula...</>}
             </button>
