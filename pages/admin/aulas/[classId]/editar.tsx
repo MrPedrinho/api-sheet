@@ -60,7 +60,10 @@ export const getServerSideProps = withPageAuthRequired({
             algos: algorithms.map((algo: Algorithm) => {
                 delete algo._id
                 delete algo.tags
-
+                algo.tags!.forEach((tag: any) => {
+                    if (tag.type === "lang") algo.lang = tag.value
+                    if (tag.type === "dif") algo.diff = tag.value
+                })
                 return algo
             })
         }
