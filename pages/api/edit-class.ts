@@ -16,7 +16,7 @@ export default withApiAuthRequired(async function myApiRoute(req, res) {
         data.algos.forEach((algo: Algorithm, idx: number)=> {
             const {content, description, diff, lang, name} = algo
 
-            const syntax: {[key: string]: any} = {"C++": "c++", C: "c", Python: "python"}
+            const syntax: {[key: string]: any} = {"C++": "cpp", C: "c", Python: "python"}
 
             const tags = [{type: "lang", value: lang}, {type: "diff", value: diff!}]
 

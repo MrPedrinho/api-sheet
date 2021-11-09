@@ -1,6 +1,7 @@
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {FormValues} from "../utils/types";
 import {CloseIcon, PlusIcon, UploadIcon} from "@iconicicons/react";
+import {useState} from "react";
 
 type Props = {
     onSubmit: SubmitHandler<FormValues>
@@ -15,9 +16,13 @@ function Error({message}: {message: string | undefined}) {
 export default function Form({onSubmit, defaultValues, type}: Props) {
     const {register, handleSubmit, control, formState: {errors}} = useForm<FormValues>({defaultValues})
     const {fields, append, remove} = useFieldArray({control, name: "algos"})
+    const [sent, setSent] = useState(false)
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" className="flex flex-col py-2">
+        <form onSubmit={() => {
+            setSent(true)
+            handleSubmit(onSubmit)
+        }} autoComplete="off" className="flex flex-col py-2">
             <div className="flex flex-col py-2">
                 <label className="text-green-500 text-xl" htmlFor="name">Nome da aula:</label>
                 <input className="border-solid p-2 border-b border-green-300 focus-visible:border-green-500 focus:outline-none" type="text" id="name" {...register("nome", {required: "Necessário"})} placeholder="Aula 1" />
@@ -78,7 +83,10 @@ export default function Form({onSubmit, defaultValues, type}: Props) {
                     );
                 })}
             </ul>
-            <button className="mr-auto flex items-center mt-4 rounded-full gap-2 bg-green-500 text-white transition hover:bg-white hover:text-green-500 border border-green-500 px-4 py-2" type="submit"><UploadIcon />{type === "create" ? "Submeter" : "Confirmar"}</button>
+            <button className="mr-auto flex items-center mt-4 rounded-full gap-2 bg-green-500 text-white transition hover:bg-white hover:text-green-500 border border-green-500 px-4 py-2" disabled={sent} type="submit">
+                {!sent && <><UploadIcon/>{type === "create" ? "Submeter" : "Confirmar"}</>}
+                {sent && <>A criar aula...</>}
+            </button>
         </form>
     )
 }
