@@ -50,7 +50,7 @@ export const getServerSideProps = withPageAuthRequired({
     async getServerSideProps(context) {
         const data = await getClass(context.params!.classId as string)
 
-        const {name, date, algorithms} = data.classes[0]
+        const {name, date, algorithms} = data.classes
 
         const newDate = new Date(date).toISOString().substr(0, 10) as any
 
