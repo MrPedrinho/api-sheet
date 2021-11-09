@@ -9,8 +9,11 @@ import Form from "../../../../components/Form";
 import Link from "next/link";
 import {ArrowLeftIcon} from "@iconicicons/react";
 import Header from "../../../../components/Header";
+import {getClass} from "../../../../utils/get-class";
 
 export default function Editar({aula}: {aula: FormValues}) {
+    aula = JSON.parse(aula as any)
+
     const router = useRouter()
 
     const {classId} = router.query
@@ -45,7 +48,7 @@ export default function Editar({aula}: {aula: FormValues}) {
 export const getServerSideProps = withPageAuthRequired({
     returnTo: "/",
     async getServerSideProps(context) {
-        const {data} = await axios.get("https://algos-api.vercel.app/api/classes", {params: {classId: context.params!.classId}})
+        const data = await getClass(context.params!.classId as string)
 
         const {name, date, algorithms} = data.classes[0]
 
@@ -64,7 +67,7 @@ export const getServerSideProps = withPageAuthRequired({
 
         return {
             props: {
-                aula: formVals
+                aula: JSON.stringify(formVals)
             }
         }
     }

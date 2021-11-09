@@ -1,13 +1,13 @@
 import type {NextPage} from 'next'
 import Link from "next/link"
 import {Class} from "../../utils/types";
-import axios from "axios";
 import {withPageAuthRequired} from "@auth0/nextjs-auth0";
 import Header from "../../components/Header";
+import {getClass} from "../../utils/get-class";
 
-const Home: NextPage<{classes: Class[]}> = ({ classes }) => {
+const Home: NextPage<{classes: string}> = ({ classes }) => {
 
-    const newClasses = classes.map((c: Class) => {
+    const newClasses: Class[] = JSON.parse(classes).map((c: Class) => {
         c.date = new Date(c.date)
         return c
     })
@@ -49,11 +49,11 @@ export default Home
 export const getServerSideProps = withPageAuthRequired({
     returnTo: "/",
     async getServerSideProps() {
-        const {data} = await axios.get("https://algos-api.vercel.app/api/classes")
+        const data = await getClass()
 
         return {
             props: {
-                classes: data.classes,
+                classes: JSON.stringify(data.classes)
             },
         }
     }

@@ -4,8 +4,11 @@ import axios from "axios";
 import {withPageAuthRequired} from "@auth0/nextjs-auth0";
 import {useRouter} from "next/router";
 import Header from "../../../../components/Header";
+import {getAlgo} from "../../../../utils/get-algo";
 
 export default function Aula ({aula}: {aula: Class}) {
+
+    aula = JSON.parse(aula as any)
 
     const router = useRouter()
 
@@ -61,11 +64,11 @@ export default function Aula ({aula}: {aula: Class}) {
 export const getServerSideProps = withPageAuthRequired({
     returnTo: "/",
     async getServerSideProps(context) {
-        const {data} = await axios.get("https://algos-api.vercel.app/api/algos", {params: {classId: context.params!.classId}})
+        const data = await getAlgo({classId: context.params!.classId})
 
         return {
             props: {
-                aula: data.aula
+                aula: JSON.stringify(data.aula)
             }
         }
     }

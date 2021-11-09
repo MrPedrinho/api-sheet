@@ -1,19 +1,22 @@
 import Link from "next/link";
 import {Class} from "../../../utils/types";
 import {GetStaticPaths, GetStaticProps} from "next";
-import axios from "axios";
 import Header from "../../../components/Header";
+import {getClass} from "../../../utils/get-class";
+import {getAlgo} from "../../../utils/get-algo";
 
-export default function Aula ({aula}: {aula: Class}) {
+export default function Aula ({aula}: {aula: string | Class}) {
+
+    aula = JSON.parse(aula as string)
 
     return (
         <div>
-            <Header title={aula.name}/>
+            <Header title={(aula as Class).name}/>
             <div className="w-full h-full p-5 flex flex-col items-center">
                 <div className="flex flex-row items-center justify-center">
                     <h1 className="text-3xl font-semibold opacity-80">
                         <Link href={`/`}>
-                            <a className="text-green-500 hover:animate-pulse hover:underline">{aula.name}</a>
+                            <a className="text-green-500 hover:animate-pulse hover:underline">{(aula as Class).name}</a>
                         </Link>
                         {" / "}
                         Algoritmos
@@ -24,12 +27,12 @@ export default function Aula ({aula}: {aula: Class}) {
                         <span className="col-start-1 col-span-3">Nome</span>
                         <span className="col-start-4">Linguagem</span>
                     </div>
-                    {aula.algorithms.map(algo => (
+                    {(aula as Class).algorithms.map(algo => (
                         <div key={algo.name} className="text-xl w-full grid grid-cols-6 pt-2">
                             <span className="col-start-1 col-span-3 flex items-center">{algo.name}</span>
                             <span className="col-start-4 flex items-center">{algo.lang}</span>
                             <span className="col-start-6">
-                                <Link href={`/aulas/${aula.id}/algo/${algo.id}`}>
+                                <Link href={`/aulas/${(aula as Class).id}/algo/${algo.id}`}>
                                     <a className="text-green-500 text-center my-1 hover:animate-pulse">Ver mais</a>
                                 </Link>
                             </span>
@@ -42,7 +45,7 @@ export default function Aula ({aula}: {aula: Class}) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {data: {classes}} = await axios.get("https://algos-api.vercel.app/api/classes")
+    const {classes} = await getClass()
 
     let paths: any[] = []
 
@@ -57,11 +60,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const {data} = await axios.get("https://algos-api.vercel.app/api/algos", {params: {classId: params!.classId}})
+    const data = await getAlgo({classId: params!.classId})
 
     return {
         props: {
-            aula: data.aula
+            aula: JSON.stringify(data.aula)
         },
         revalidate: 60
     }

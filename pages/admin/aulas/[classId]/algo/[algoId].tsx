@@ -1,16 +1,16 @@
 import Link from "next/link"
 // @ts-ignore
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-// @ts-ignore
-import { dark } from 'react-syntax-highlighter/dist/cjs/styles/prism'
 import {GetStaticPaths, GetStaticProps} from "next";
-import axios from "axios";
 import {Class, Algorithm} from "../../../../../utils/types";
 import Header from "../../../../../components/Header";
+import {getClass} from "../../../../../utils/get-class";
+import {getAlgo} from "../../../../../utils/get-algo";
 
 export default function algoId ({aula, algo}: {aula: Class, algo: Algorithm}) {
 
-    const algoDetails = algo
+    aula = JSON.parse(aula as any)
+    const algoDetails = JSON.parse(algo as any)
 
     return (
         <div>
@@ -41,7 +41,7 @@ export default function algoId ({aula, algo}: {aula: Class, algo: Algorithm}) {
                     <hr className="border-1 border-green-500 my-4" />
                     <div className="max-w-full">
                         <h1 className="text-green-500 text-2xl mb-2 font-semibold opacity-80">Algoritmo:</h1>
-                        <SyntaxHighlighter language={algoDetails.syntax} style={dark} showLineNumbers={true} className="shadow-md rounded-md">
+                        <SyntaxHighlighter language={algoDetails.syntax} showLineNumbers={true} className="shadow-md rounded-md">
                             {algoDetails.content}
                         </SyntaxHighlighter>
                         <hr className="border-1 border-green-500 my-4" />
@@ -66,7 +66,7 @@ export default function algoId ({aula, algo}: {aula: Class, algo: Algorithm}) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const {data: {classes}} = await axios.get("https://algos-api.vercel.app/api/classes")
+    const {classes} = await getClass()
 
     let paths: any[] = []
 
@@ -83,12 +83,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-    const {data} = await axios.get("https://algos-api.vercel.app/api/algos", {params: {classId: params!.classId, algoId: params!.algoId}})
+    const data = await getAlgo({classId: params!.classId, algoId: params!.algoId})
+
 
     return {
         props: {
-            aula: data.aula,
-            algo: data.algo
+            aula: JSON.stringify(data.aula),
+            algo: JSON.stringify(data.algo)
         },
         revalidate: 60
     }

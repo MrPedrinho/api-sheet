@@ -1,12 +1,12 @@
-import type {GetStaticProps, NextPage} from 'next'
+import type {NextPage} from 'next'
 import Link from "next/link"
 import {Class} from "../utils/types";
-import axios from "axios";
 import Header from "../components/Header";
+import {getClass} from "../utils/get-class";
 
-const Home: NextPage<{classes: Class[]}> = ({classes}) => {
+const Home: NextPage<{classes: string}> = ({classes}) => {
 
-    const newClasses = classes.map((c: Class) => {
+    const newClasses: Class[] = JSON.parse(classes).map((c: Class) => {
         c.date = new Date(c.date)
         return c
     })
@@ -40,12 +40,12 @@ const Home: NextPage<{classes: Class[]}> = ({classes}) => {
 
 export default Home
 
-export const getStaticProps: GetStaticProps = async () => {
-    const {data} = await axios.get("https://algos-api.vercel.app/api/classes")
+export const getStaticProps = async () => {
+    const data = await getClass()
 
     return {
         props: {
-            classes: data.classes
+            classes: JSON.stringify(data.classes)
         },
         revalidate: 60
     }
