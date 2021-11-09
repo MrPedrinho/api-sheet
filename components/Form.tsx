@@ -91,7 +91,7 @@ export default function Form({onSubmit, defaultValues, type}: Props) {
             </div>
             <button className="mr-auto flex items-center mt-4 rounded-full gap-2 bg-green-500 text-white transition hover:bg-white hover:text-green-500 border border-green-500 px-4 py-2" disabled={sent} type="submit">
                 {!sent && <><UploadIcon/>{type === "create" ? "Submeter" : "Confirmar"}</>}
-                {sent && <>A criar aula...</>}
+                {sent && <>{type === "create" ? "A criar aula..." : "A editar aula..."}</>}
             </button>
         </form>
     )
