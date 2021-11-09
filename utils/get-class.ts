@@ -7,7 +7,7 @@ export async function getClass (id?: string) {
         await dbConnect()
 
         const query = id ?? ""
-        const aulas = await Aula.find(query.length > 0 ? {id: query}: {})
+        const aulas = await Aula.find(query.length > 0 ? {id: parseInt(query)}: {})
 
         let classDetails = aulas.map((aula: Class) => {
             const {name, id, date, algorithms} = aula
