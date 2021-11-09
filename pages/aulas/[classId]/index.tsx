@@ -4,8 +4,13 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import Header from "../../../components/Header";
 import {getClass} from "../../../utils/get-class";
 import {getAlgo} from "../../../utils/get-algo";
+import {useRouter} from "next/router";
+import FallbackPage from "../../../components/FallbackPage";
 
 export default function Aula ({aula}: {aula: string | Class}) {
+    const router = useRouter()
+
+    if (router.isFallback) return <FallbackPage />
 
     aula = JSON.parse(aula as string)
 
